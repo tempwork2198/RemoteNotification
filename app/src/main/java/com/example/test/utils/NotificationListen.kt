@@ -24,24 +24,24 @@ class NotificationListen : NotificationListenerService() {
 
     override fun onCreate() {
         super.onCreate()
-
-        temp.add(NotificationData("Test","Body test","group"))
-
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onNotificationPosted(sbn: StatusBarNotification?, rankingMap: RankingMap?) {
         super.onNotificationPosted(sbn, rankingMap)
-        Log.i(TAG_LOCAL,"**********  onNotificationPosted");
+
         if (sbn != null) {
             val bodyNotification = sbn.notification.tickerText
+            val timeNotification = sbn.postTime
+            val idNotification = sbn.id
+            val keyNotification = sbn.key
+            val packageNotification = sbn.packageName
             val titleNotification = sbn.notification.extras.getString(Notification.EXTRA_TITLE)
-            var applicationNotification = sbn.notification.group
+            val applicationNotification = sbn.notification.group
 
-            Log.e(TAG_LOCAL,"**********  onNotificationPosted"+bodyNotification);
 
-            temp.add(NotificationData(titleNotification.toString(), bodyNotification.toString() ,applicationNotification))
+            temp.add(NotificationData(packageNotification,idNotification,keyNotification,timeNotification,titleNotification.toString(), bodyNotification.toString() ,applicationNotification))
 
 
             // launching a new coroutine
